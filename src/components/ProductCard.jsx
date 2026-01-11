@@ -1,6 +1,16 @@
+import { useState } from "react";
 import "./ProductCard.css";
 
-function ProductCard({ id, imageUrl, title, text, price, handleAddToCart }) {
+function ProductCard({ id, imageUrl, title, text, price }) {
+  const [isAdded, setIsAdded] = useState(false);
+  // console.log("🚀 ~ ProductCard ~ isAdded:", isAdded);
+
+  const handleAddToCart = () => {
+    // console.log("🎈 ~ handleAddToCart ~ isAdded:", isAdded);
+    setIsAdded((prevState) => !prevState);
+    // console.log("🎈 ~ handleAddToCart ~ isAdded:", isAdded);
+  };
+
   return (
     <div id={id} className="card">
       <img
@@ -13,8 +23,11 @@ function ProductCard({ id, imageUrl, title, text, price, handleAddToCart }) {
         <p className="card-text">{text}</p>
         <div className="card-footer">
           <span className="card-price">${price}</span>
-          <button className="card-button" onClick={handleAddToCart}>
-            Agregar al Carrito
+          <button
+            className={`card-button ${isAdded ? "added" : ""}`}
+            onClick={handleAddToCart}
+          >
+            {isAdded ? "Agregado" : "Agregar al Carrito"}
           </button>
         </div>
       </div>

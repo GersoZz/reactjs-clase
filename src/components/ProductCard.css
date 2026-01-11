@@ -55,3 +55,7 @@
 .card-button:hover {
   opacity: 0.8;
 }
+
+.card-button.added {
+  background-color: #4caf50;
+}
