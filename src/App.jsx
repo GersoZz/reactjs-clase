@@ -19,7 +19,6 @@ function App() {
     },
     {
       id: "card-03",
-      imageUrl: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a",
       title: "Reloj Inteligente",
       text: "Monitor de tiempo inteligente con vista de día y de año.",
       price: 299,

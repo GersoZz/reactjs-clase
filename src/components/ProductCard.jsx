@@ -1,7 +1,13 @@
 import { useState } from "react";
 import "./ProductCard.css";
 
-function ProductCard({ id, imageUrl, title, text, price }) {
+function ProductCard({
+  id,
+  imageUrl = "https://picsum.photos/300",
+  title,
+  text,
+  price,
+}) {
   const [isAdded, setIsAdded] = useState(false);
   // console.log("🚀 ~ ProductCard ~ isAdded:", isAdded);
 
@@ -13,11 +19,7 @@ function ProductCard({ id, imageUrl, title, text, price }) {
 
   return (
     <div id={id} className="card">
-      <img
-        className="card-image"
-        src={imageUrl || "https://picsum.photos/300"}
-        alt={title}
-      />
+      <img className="card-image" src={imageUrl} alt={title} />
       <div className="card-content">
         <h3 className="card-title">{title}</h3>
         <p className="card-text">{text}</p>
