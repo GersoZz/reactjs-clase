@@ -1,21 +1,15 @@
-import { useState } from "react";
-import "./ProductCard.css";
+import { useState } from 'react'
+import './ProductCard.css'
 
-function ProductCard({
-  id,
-  imageUrl = "https://picsum.photos/300",
-  title,
-  text,
-  price,
-}) {
-  const [isAdded, setIsAdded] = useState(false);
+function ProductCard({ id, imageUrl = 'https://picsum.photos/300', title, text, price }) {
+  const [isAdded, setIsAdded] = useState(false)
   // console.log("🚀 ~ ProductCard ~ isAdded:", isAdded);
 
   const handleAddToCart = () => {
     // console.log("🎈 ~ handleAddToCart ~ isAdded:", isAdded);
-    setIsAdded((prevState) => !prevState);
+    setIsAdded((prevState) => !prevState)
     // console.log("🎈 ~ handleAddToCart ~ isAdded:", isAdded);
-  };
+  }
 
   return (
     <div id={id} className="card">
@@ -25,16 +19,13 @@ function ProductCard({
         <p className="card-text">{text}</p>
         <div className="card-footer">
           <span className="card-price">${price}</span>
-          <button
-            className={`card-button ${isAdded ? "added" : ""}`}
-            onClick={handleAddToCart}
-          >
-            {isAdded ? "Agregado" : "Agregar al Carrito"}
+          <button className={`card-button ${isAdded ? 'added' : ''}`} onClick={handleAddToCart}>
+            {isAdded ? 'Agregado' : 'Agregar al Carrito'}
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default ProductCard;
+export default ProductCard

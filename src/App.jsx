@@ -1,33 +1,33 @@
-import "./App.css";
-import ProductCard from "./components/ProductCard";
+import './App.css'
+import ProductCard from './components/ProductCard'
 
 function App() {
   const productsData = [
     {
-      id: "card-01",
-      imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-      title: "Zapatillas Runing",
-      text: "Zapatillas ligeras para correr largas distancias.",
+      id: 'card-01',
+      imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff',
+      title: 'Zapatillas Runing',
+      text: 'Zapatillas ligeras para correr largas distancias.',
       price: 120.5,
     },
     {
-      id: "card-02",
-      imageUrl: "https://images.unsplash.com/photo-1593369196682-6d8ec9ff3ae0",
-      title: "Cafetera Express",
-      text: "Cafetera de café con leche, leche con café, y café con leche.",
+      id: 'card-02',
+      imageUrl: 'https://images.unsplash.com/photo-1593369196682-6d8ec9ff3ae0',
+      title: 'Cafetera Express',
+      text: 'Cafetera de café con leche, leche con café, y café con leche.',
       price: 199,
     },
     {
-      id: "card-03",
-      title: "Reloj Inteligente",
-      text: "Monitor de tiempo inteligente con vista de día y de año.",
+      id: 'card-03',
+      title: 'Reloj Inteligente',
+      text: 'Monitor de tiempo inteligente con vista de día y de año.',
       price: 299,
     },
-  ];
+  ]
 
   const handleAddToCart = () => {
-    console.log("Agregar al Carrito");
-  };
+    console.log('Agregar al Carrito')
+  }
 
   return (
     <>
@@ -46,7 +46,7 @@ function App() {
         ))}
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
