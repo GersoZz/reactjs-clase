@@ -1,7 +1,11 @@
+import { useState } from 'react'
 import './App.css'
 import ProductCard from './components/ProductCard'
+import PromoBanner from './components/PromoBanner'
 
 function App() {
+  const [promoAvailability, setPromoAvailability] = useState(true)
+
   const productsData = [
     {
       id: 'card-01',
@@ -29,9 +33,15 @@ function App() {
     console.log('Agregar al Carrito')
   }
 
+  const onClose = () => {
+    console.log('Desmontar PromoBanner')
+    setPromoAvailability(false)
+  }
+
   return (
     <>
       <h1>Vite + React</h1>
+      {promoAvailability && <PromoBanner onClose={onClose} initialSeconds={20} />}
       <div className="card-list">
         {productsData.map((product) => (
           <ProductCard
