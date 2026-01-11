@@ -1,4 +1,5 @@
 import "./App.css";
+import ProductCard from "./components/ProductCard";
 
 function App() {
   const cardId = "card-01";
@@ -15,23 +16,14 @@ function App() {
   return (
     <>
       <h1>Vite + React</h1>
-      <div id={cardId} className="card">
-        <img
-          className="card-image"
-          src={cardImageUrl || "https://picsum.photos/300"}
-          alt={cardTitle}
-        />
-        <div className="card-content">
-          <h3 className="card-title">{cardTitle}</h3>
-          <p className="card-text">{cardText}</p>
-          <div className="card-footer">
-            <span className="card-price">${cardPrice}</span>
-            <button className="card-button" onClick={handleAddToCart}>
-              Agregar al Carrito
-            </button>
-          </div>
-        </div>
-      </div>
+      <ProductCard
+        id={cardId}
+        imageUrl={cardImageUrl}
+        title={cardTitle}
+        text={cardText}
+        price={cardPrice}
+        handleAddToCart={handleAddToCart}
+      />
     </>
   );
 }
