@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-import ProductCard from './components/ProductCard'
 import PromoBanner from './components/PromoBanner'
 import Header from './components/Header'
+import ProductList from './components/ProductList'
 
 function App() {
   const [cartCount, setCartCount] = useState(0)
@@ -49,19 +49,7 @@ function App() {
       <Header cartCount={cartCount} />
       <h1>Vite + React</h1>
       {promoAvailability && <PromoBanner onClose={onClose} initialSeconds={20} />}
-      <div className="card-list">
-        {productsData.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            imageUrl={product.imageUrl}
-            title={product.title}
-            text={product.text}
-            price={product.price}
-            onAddToCart={handleAddToCart}
-          />
-        ))}
-      </div>
+      <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
     </>
   )
 }
