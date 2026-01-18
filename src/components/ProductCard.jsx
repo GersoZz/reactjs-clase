@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import './ProductCard.css'
 
-function ProductCard({ id, imageUrl = 'https://picsum.photos/300', title, text, price }) {
+function ProductCard({ id, imageUrl = 'https://picsum.photos/300', title, text, price, onAddToCart }) {
   const [isAdded, setIsAdded] = useState(false)
   // console.log("🚀 ~ ProductCard ~ isAdded:", isAdded);
 
   const handleAddToCart = () => {
     // console.log("🎈 ~ handleAddToCart ~ isAdded:", isAdded);
+    const newState = !isAdded
     setIsAdded((prevState) => !prevState)
+    onAddToCart(newState)
     // console.log("🎈 ~ handleAddToCart ~ isAdded:", isAdded);
   }
 

@@ -2,8 +2,10 @@ import { useState } from 'react'
 import './App.css'
 import ProductCard from './components/ProductCard'
 import PromoBanner from './components/PromoBanner'
+import Header from './components/Header'
 
 function App() {
+  const [cartCount, setCartCount] = useState(0)
   const [promoAvailability, setPromoAvailability] = useState(true)
 
   const productsData = [
@@ -29,8 +31,12 @@ function App() {
     },
   ]
 
-  const handleAddToCart = () => {
-    console.log('Agregar al Carrito')
+  const handleAddToCart = (isAdded) => {
+    if (isAdded) {
+      setCartCount((prev) => prev + 1)
+    } else {
+      setCartCount((prev) => prev - 1)
+    }
   }
 
   const onClose = () => {
@@ -40,6 +46,7 @@ function App() {
 
   return (
     <>
+      <Header cartCount={cartCount} />
       <h1>Vite + React</h1>
       {promoAvailability && <PromoBanner onClose={onClose} initialSeconds={20} />}
       <div className="card-list">
@@ -51,7 +58,7 @@ function App() {
             title={product.title}
             text={product.text}
             price={product.price}
-            handleAddToCart={handleAddToCart}
+            onAddToCart={handleAddToCart}
           />
         ))}
       </div>
