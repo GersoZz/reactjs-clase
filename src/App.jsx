@@ -1,40 +1,55 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import PromoBanner from './components/PromoBanner'
 import Header from './components/Header'
 import ProductList from './components/ProductList'
 import Container from './components/Container'
+import { productAdapter } from './adapters/products.adapter'
 
 function App() {
   const [promoAvailability, setPromoAvailability] = useState(true)
-
-  const productsData = [
-    {
-      id: 'card-01',
-      imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff',
-      title: 'Zapatillas Runing',
-      text: 'Zapatillas ligeras para correr largas distancias.',
-      price: 120.5,
-    },
-    {
-      id: 'card-02',
-      imageUrl: 'https://images.unsplash.com/photo-1593369196682-6d8ec9ff3ae0',
-      title: 'Cafetera Express',
-      text: 'Cafetera de café con leche, leche con café, y café con leche.',
-      price: 199,
-    },
-    {
-      id: 'card-03',
-      title: 'Reloj Inteligente',
-      text: 'Monitor de tiempo inteligente con vista de día y de año.',
-      price: 299,
-    },
-  ]
+  const [productsData, setProductsData] = useState([])
+  const [productsSuggestedData, setProductsSuggestedData] = useState([])
+  const [productsElectronicsData, setProductsElectronicsData] = useState([])
 
   const onClose = () => {
     console.log('Desmontar PromoBanner')
     setPromoAvailability(false)
   }
+
+  useEffect(() => {
+    fetch('https://api.escuelajs.co/api/v1/products/?offset=0&limit=6')
+      .then((response) => response.json())
+      .then((data) => {
+        const products = data.map((product) => productAdapter(product))
+        setProductsData(products)
+      })
+      .catch((error) => {
+        console.error('Error al obtener los productos:', error)
+      })
+
+    // Para productos sugeridos
+    fetch('https://api.escuelajs.co/api/v1/products/?offset=6&limit=3')
+      .then((response) => response.json())
+      .then((data) => {
+        const products = data.map(productAdapter)
+        setProductsSuggestedData(products)
+      })
+      .catch((error) => {
+        console.error('Error al obtener los productos:', error)
+      })
+
+    // Para productos electronicos
+    fetch('https://api.escuelajs.co/api/v1/products/?categorySlug=electronics')
+      .then((response) => response.json())
+      .then((data) => {
+        const products = data.map(productAdapter)
+        setProductsElectronicsData(products.slice(0, 6))
+      })
+      .catch((error) => {
+        console.error('Error al obtener los productos:', error)
+      })
+  }, [])
 
   return (
     <>
@@ -52,7 +67,14 @@ function App() {
         <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
           Explora nuestra selección de productos recomendados para ti.
         </p>
-        <ProductList productsData={productsData.slice(0, 2)} />
+        <ProductList productsData={productsSuggestedData} />
+      </Container>
+
+      <Container title="Productos electrónicos">
+        <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
+          Descubre nuestra selección de productos electrónicos.
+        </p>
+        <ProductList productsData={productsElectronicsData} />
       </Container>
     </>
   )
