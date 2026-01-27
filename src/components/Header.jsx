@@ -1,6 +1,10 @@
+import { useContext } from 'react'
 import './Header.css'
+import { CartContext } from '../context/CartContext'
 
-const Header = ({ cartCount }) => {
+const Header = ({}) => {
+  const { cartCount } = useContext(CartContext)
+
   return (
     <header className="header">
       <div className="header-container">

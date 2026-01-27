@@ -6,7 +6,6 @@ import ProductList from './components/ProductList'
 import Container from './components/Container'
 
 function App() {
-  const [cartCount, setCartCount] = useState(0)
   const [promoAvailability, setPromoAvailability] = useState(true)
 
   const productsData = [
@@ -32,14 +31,6 @@ function App() {
     },
   ]
 
-  const handleAddToCart = (isAdded) => {
-    if (isAdded) {
-      setCartCount((prev) => prev + 1)
-    } else {
-      setCartCount((prev) => prev - 1)
-    }
-  }
-
   const onClose = () => {
     console.log('Desmontar PromoBanner')
     setPromoAvailability(false)
@@ -47,21 +38,21 @@ function App() {
 
   return (
     <>
-      <Header cartCount={cartCount} />
+      <Header />
       <h1>Vite + React</h1>
       {promoAvailability && <PromoBanner onClose={onClose} initialSeconds={20} />}
       <Container title="Productos disponibles">
         <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
           Estos son los productos que puedes comprar.
         </p>
-        <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
+        <ProductList productsData={productsData} />
       </Container>
 
       <Container title="Productos sugeridos">
         <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
           Explora nuestra selección de productos recomendados para ti.
         </p>
-        <ProductList productsData={productsData.slice(0, 2)} handleAddToCart={handleAddToCart} />
+        <ProductList productsData={productsData.slice(0, 2)} />
       </Container>
     </>
   )
