@@ -3,14 +3,14 @@ import './PromoBanner.css'
 
 function PromoBanner({ initialSeconds = 10, onClose }) {
   const [visible, setVisible] = useState(true)
-  console.log('🚀 ~ PromoBanner ~ visible:', visible)
+  // console.log('🚀 ~ PromoBanner ~ visible:', visible)
   const [seconds, setSeconds] = useState(initialSeconds)
 
   useEffect(() => {
     if (!visible) return
 
     const interval = setInterval(() => {
-      console.log('tick')
+      // console.log('tick')
       setSeconds((prev) => (prev > 0 ? prev - 1 : 0))
     }, 1000)
 
