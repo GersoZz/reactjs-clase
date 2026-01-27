@@ -3,6 +3,7 @@ import './App.css'
 import PromoBanner from './components/PromoBanner'
 import Header from './components/Header'
 import ProductList from './components/ProductList'
+import Container from './components/Container'
 
 function App() {
   const [cartCount, setCartCount] = useState(0)
@@ -49,7 +50,19 @@ function App() {
       <Header cartCount={cartCount} />
       <h1>Vite + React</h1>
       {promoAvailability && <PromoBanner onClose={onClose} initialSeconds={20} />}
-      <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
+      <Container title="Productos disponibles">
+        <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
+          Estos son los productos que puedes comprar.
+        </p>
+        <ProductList productsData={productsData} handleAddToCart={handleAddToCart} />
+      </Container>
+
+      <Container title="Productos sugeridos">
+        <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
+          Explora nuestra selección de productos recomendados para ti.
+        </p>
+        <ProductList productsData={productsData.slice(0, 2)} handleAddToCart={handleAddToCart} />
+      </Container>
     </>
   )
 }
