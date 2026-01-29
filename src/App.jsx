@@ -8,6 +8,7 @@ import { productAdapter } from './adapters/products.adapter'
 import Loader from './components/Loader'
 import ErrorMessage from './components/ErrorMessage'
 import { useFetch } from './hooks/useFetch'
+import { API_ENDPOINTS } from './utils/constants'
 
 function App() {
   const [promoAvailability, setPromoAvailability] = useState(true)
@@ -23,19 +24,19 @@ function App() {
     data: productsRawData,
     loading: loadingProducts,
     error: errorProducts,
-  } = useFetch('https://api.escuelajs.co/api/v1/products/?offset=0&limit=6')
+  } = useFetch(API_ENDPOINTS.PRODUCTS_AVAILABLE)
 
   const {
     data: suggestedRawData,
     loading: loadingSuggested,
     error: errorSuggested,
-  } = useFetch('https://api.escuelajs.co/api/v1/products/?offset=6&limit=3')
+  } = useFetch(API_ENDPOINTS.PRODUCTS_SUGGESTED)
 
   const {
     data: electronicsRawData,
     loading: loadingElectronics,
     error: errorElectronics,
-  } = useFetch('https://api.escuelajs.co/api/v1/products/?categorySlug=electronics')
+  } = useFetch(API_ENDPOINTS.PRODUCTS_ELECTRONICS)
 
   // Detectar errores
   useEffect(() => {
