@@ -6,6 +6,7 @@ import ProductList from './components/ProductList'
 import Container from './components/Container'
 import { productAdapter } from './adapters/products.adapter'
 import Loader from './components/Loader'
+import ErrorMessage from './components/ErrorMessage'
 import { useFetch } from './hooks/useFetch'
 
 function App() {
@@ -15,16 +16,41 @@ function App() {
   const [productsSuggestedData, setProductsSuggestedData] = useState([])
   const [productsElectronicsData, setProductsElectronicsData] = useState([])
 
+  const [errorMessage, setErrorMessage] = useState(null)
+
   // Usar el custom hook useFetch
-  const { data: productsRawData, loading: loadingProducts } = useFetch(
-    'https://api.escuelajs.co/api/v1/products/?offset=0&limit=6',
-  )
-  const { data: suggestedRawData, loading: loadingSuggested } = useFetch(
-    'https://api.escuelajs.co/api/v1/products/?offset=6&limit=3',
-  )
-  const { data: electronicsRawData, loading: loadingElectronics } = useFetch(
-    'https://api.escuelajs.co/api/v1/products/?categorySlug=electronics',
-  )
+  const {
+    data: productsRawData,
+    loading: loadingProducts,
+    error: errorProducts,
+  } = useFetch('https://api.escuelajs.co/api/v1/products/?offset=0&limit=6')
+
+  const {
+    data: suggestedRawData,
+    loading: loadingSuggested,
+    error: errorSuggested,
+  } = useFetch('https://api.escuelajs.co/api/v1/products/?offset=6&limit=3')
+
+  const {
+    data: electronicsRawData,
+    loading: loadingElectronics,
+    error: errorElectronics,
+  } = useFetch('https://api.escuelajs.co/api/v1/products/?categorySlug=electronics')
+
+  // Detectar errores
+  useEffect(() => {
+    if (errorProducts) {
+      setErrorMessage('Error al cargar productos disponibles')
+    } else if (errorSuggested) {
+      setErrorMessage('Error al cargar productos sugeridos')
+    } else if (errorElectronics) {
+      setErrorMessage('Error al cargar productos electrónicos')
+    }
+  }, [errorProducts, errorSuggested, errorElectronics])
+
+  const onCloseError = () => {
+    setErrorMessage(null)
+  }
 
   // const isLoading = loadingProducts || loadingSuggested || loadingElectronics
 
@@ -59,6 +85,7 @@ function App() {
 
   return (
     <>
+      {errorMessage && <ErrorMessage message={errorMessage} onClose={onCloseError} />}
       <Header />
       <h1>Vite + React</h1>
       {promoAvailability && <PromoBanner onClose={onClose} initialSeconds={20} />}
