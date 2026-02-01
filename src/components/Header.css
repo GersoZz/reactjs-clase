@@ -17,11 +17,36 @@
   align-items: center;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: inherit;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
 .header-logo {
   margin: 0;
   font-size: 1.8rem;
   font-weight: bold;
   letter-spacing: 0.5px;
+  text-decoration: none;
 }
 
 .header-cart {
@@ -34,6 +59,7 @@
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50px;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .header-cart:hover {

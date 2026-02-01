@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import useFetch from '../hooks/useFetch'
 import { API_ENDPOINTS } from '../utils/constants'
-import Header from '../components/Header'
 import ErrorMessage from '../components/ErrorMessage'
 import Container from '../components/Container'
 import ProductList from '../components/ProductList'
@@ -79,7 +78,6 @@ function HomePage() {
   return (
     <>
       {errorMessage && <ErrorMessage message={errorMessage} onClose={onCloseError} />}
-      <Header />
       <h1>Vite + React</h1>
       {promoAvailability && <PromoBanner onClose={onClose} initialSeconds={20} />}
 
