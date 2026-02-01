@@ -37,6 +37,11 @@
   transition: background 0.15s;
 }
 
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.7);
+  font-weight: bold;
+}
+
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.5);
 }
