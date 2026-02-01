@@ -7,6 +7,7 @@ import Container from './components/Container'
 import { productAdapter } from './adapters/products.adapter'
 import Loader from './components/Loader'
 import useFetch from './hooks/useFetch'
+import ErrorMessage from './components/ErrorMessage'
 
 function App() {
   const [promoAvailability, setPromoAvailability] = useState(true)
@@ -15,22 +16,31 @@ function App() {
   const [productsSuggestedData, setProductsSuggestedData] = useState([])
   const [productsElectronicsData, setProductsElectronicsData] = useState([])
 
+  const [errorMessage, setErrorMessage] = useState(null)
+
   const onClose = () => {
     console.log('Desmontar PromoBanner')
     setPromoAvailability(false)
   }
 
-  const { data: productsRawData, loading: loadingProducts } = useFetch(
-    'https://api.escuelajs.co/api/v1/products/?offset=0&limit=6',
-  )
+  const {
+    data: productsRawData,
+    loading: loadingProducts,
+    error: errorProducts,
+  } = useFetch('https://api.escuelajs.co/api/v1/products/?offset=0&limit=6')
+  console.log('errorProducts', errorProducts)
 
-  const { data: suggestedRawData, loading: loadingSuggested } = useFetch(
-    'https://api.escuelajs.co/api/v1/products/?offset=6&limit=3',
-  )
+  const {
+    data: suggestedRawData,
+    loading: loadingSuggested,
+    error: errorSuggested,
+  } = useFetch('https://api.escuelajs.co/api/v1/products/?offset=6&limit=3')
 
-  const { data: electronicsRawData, loading: loadingElectronics } = useFetch(
-    'https://api.escuelajs.co/api/v1/products/?categorySlug=electronics',
-  )
+  const {
+    data: electronicsRawData,
+    loading: loadingElectronics,
+    error: errorElectronics,
+  } = useFetch('https://api.escuelajs.co/api/v1/products/?categorySlug=electronics')
 
   useEffect(() => {
     if (productsRawData) {
@@ -49,31 +59,56 @@ function App() {
     }
   }, [productsRawData, suggestedRawData, electronicsRawData])
 
+  useEffect(() => {
+    if (errorProducts) {
+      setErrorMessage('Error al obtener los productos')
+    }
+
+    if (errorSuggested) {
+      setErrorMessage('Error al obtener los productos sugeridos')
+    }
+
+    if (errorElectronics) {
+      setErrorMessage('Error al obtener los productos electrónicos')
+    }
+  }, [errorProducts, errorSuggested, errorElectronics])
+
+  const onCloseError = () => {
+    setErrorMessage(null)
+  }
   return (
     <>
+      {errorMessage && <ErrorMessage message={errorMessage} onClose={onCloseError} />}
       <Header />
       <h1>Vite + React</h1>
       {promoAvailability && <PromoBanner onClose={onClose} initialSeconds={20} />}
-      <Container title="Productos disponibles">
-        <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
-          Estos son los productos que puedes comprar.
-        </p>
-        {loadingProducts ? <Loader /> : <ProductList productsData={productsData} />}
-      </Container>
 
-      <Container title="Productos sugeridos">
-        <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
-          Explora nuestra selección de productos recomendados para ti.
-        </p>
-        {loadingSuggested ? <Loader /> : <ProductList productsData={productsSuggestedData} />}
-      </Container>
+      {!errorProducts && (
+        <Container title="Productos disponibles">
+          <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
+            Estos son los productos que puedes comprar.
+          </p>
+          {loadingProducts ? <Loader /> : <ProductList productsData={productsData} />}
+        </Container>
+      )}
 
-      <Container title="Productos electrónicos">
-        <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
-          Descubre nuestra selección de productos electrónicos.
-        </p>
-        {loadingElectronics ? <Loader /> : <ProductList productsData={productsElectronicsData} />}
-      </Container>
+      {!errorSuggested && (
+        <Container title="Productos sugeridos">
+          <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
+            Explora nuestra selección de productos recomendados para ti.
+          </p>
+          {loadingSuggested ? <Loader /> : <ProductList productsData={productsSuggestedData} />}
+        </Container>
+      )}
+
+      {!errorElectronics && (
+        <Container title="Productos electrónicos">
+          <p style={{ textAlign: 'center', opacity: 0.8, marginBottom: '16px' }}>
+            Descubre nuestra selección de productos electrónicos.
+          </p>
+          {loadingElectronics ? <Loader /> : <ProductList productsData={productsElectronicsData} />}
+        </Container>
+      )}
     </>
   )
 }
