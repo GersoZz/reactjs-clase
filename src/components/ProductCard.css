@@ -80,3 +80,10 @@
 .card-button.added:hover {
   background-color: #218838;
 }
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
